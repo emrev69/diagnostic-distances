@@ -387,10 +387,6 @@
       });
     }, 150);
 
-    document.getElementById('d-articles').innerHTML =
-      '<div class="article-card"><span class="article-badge">'+c.badge+'</span><div class="article-body"><h3>'+c.aTitle+'</h3><p>'+c.aDesc+'</p><a class="article-btn" href="'+c.aUrl+'" target="_blank">Lire l\'article &rarr;</a></div></div>'
-      +'<div class="article-card" style="margin-top:12px"><span class="article-badge">Point de départ · La série complète</span><div class="article-body"><h3>Les distances que Thomas ne voyait pas</h3><p>L\'article qui présente le cadre complet des trois distances et leur interdépendance.</p><a class="article-btn" href="https://www.ezo.consulting/fr/les-distances-que-thomas-ne-voyait-pas/" target="_blank">Lire l\'article &rarr;</a></div></div>';
-
     diagShow('step-result');
     sendBrevo(s, dom, labels);
   };
