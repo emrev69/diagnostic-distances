@@ -1,0 +1,401 @@
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+.diag-wrap *, .diag-wrap *::before, .diag-wrap *::after { box-sizing: border-box; }
+.diag-wrap { font-family: 'Exo 2', Arial, sans-serif; color: #02073E; max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; }
+.diag-wrap .progress-wrap { margin-bottom: 32px; }
+.diag-wrap .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-bottom: 8px; }
+.diag-wrap .progress-bar { height: 4px; background: #e0d8c8; border-radius: 2px; }
+.diag-wrap .progress-fill { height: 100%; background: #02073E; border-radius: 2px; transition: width .4s ease; }
+.diag-wrap .step { display: none; }
+.diag-wrap .step.active { display: block; }
+.diag-wrap .intro-card { background: #fff; border-radius: 12px; border: 1px solid #e0d8c8; padding: 40px 32px; text-align: center; }
+.diag-wrap .intro-card h2 { font-size: 22px; font-weight: 800; color: #02073E; margin: 0 0 12px; }
+.diag-wrap .intro-card p { font-size: 15px; color: #555; line-height: 1.75; margin: 0 0 24px; }
+.diag-wrap .tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.diag-wrap .tag { background: #f5ecd4; color: #02073E; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 20px; }
+.diag-wrap .q-label { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #d4b96a; margin: 0 0 8px; display: block; }
+.diag-wrap .q-title { font-size: 20px; font-weight: 800; color: #02073E; line-height: 1.35; margin: 0 0 6px; }
+.diag-wrap .q-sub { font-size: 14px; color: #888; line-height: 1.6; margin: 0 0 24px; }
+.diag-wrap .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.diag-wrap .opt { border: 1.5px solid #e0d8c8; border-radius: 10px; padding: 16px 18px; cursor: pointer; transition: all .2s; background: #fff; text-align: left; }
+.diag-wrap .opt:hover { border-color: #02073E; background: #f5ecd4; }
+.diag-wrap .opt.selected { border-color: #02073E; background: #02073E; }
+.diag-wrap .opt-title { font-size: 14px; font-weight: 700; color: #02073E; margin: 0 0 3px; }
+.diag-wrap .opt.selected .opt-title { color: #E7D49E; }
+.diag-wrap .opt-desc { font-size: 13px; color: #888; line-height: 1.55; margin: 0; }
+.diag-wrap .opt.selected .opt-desc { color: #b0b8d4; }
+.diag-wrap .btn-primary { background: #02073E; color: #E7D49E; border: none; border-radius: 6px; padding: 14px 28px; font-family: 'Exo 2', Arial, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: .03em; opacity: .4; pointer-events: none; transition: background .2s, opacity .2s; }
+.diag-wrap .btn-primary.ready { opacity: 1; pointer-events: auto; }
+.diag-wrap .btn-primary.ready:hover { background: #0d1a5c; }
+.diag-wrap .btn-start { background: #02073E; color: #E7D49E; border: none; border-radius: 6px; padding: 14px 32px; font-family: 'Exo 2', Arial, sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: .03em; }
+.diag-wrap .btn-start:hover { background: #0d1a5c; }
+.diag-wrap .result-header { background: #02073E; border-radius: 12px; padding: 32px 28px; text-align: center; margin-bottom: 24px; }
+.diag-wrap .result-kicker { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #d4b96a; margin: 0 0 10px; display: block; }
+.diag-wrap .result-title { font-size: 26px; font-weight: 800; color: #E7D49E; margin: 0 0 8px; line-height: 1.3; }
+.diag-wrap .result-sub { font-size: 15px; color: #b0b8d4; line-height: 1.65; margin: 0; }
+.diag-wrap .scores { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.diag-wrap .score-card { background: #fff; border: 1.5px solid #e0d8c8; border-radius: 10px; padding: 16px 12px; text-align: center; }
+.diag-wrap .score-card.dominant { border-color: #02073E; background: #f5ecd4; }
+.diag-wrap .score-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #aaa; margin: 0 0 10px; display: block; line-height: 1.4; }
+.diag-wrap .score-card.dominant .score-label { color: #02073E; }
+.diag-wrap .score-bar-bg { height: 6px; background: #e8e0cc; border-radius: 3px; margin-bottom: 10px; overflow: hidden; }
+.diag-wrap .score-bar-fill { height: 100%; background: #d4b96a; border-radius: 3px; width: 0%; transition: width 1s ease; }
+.diag-wrap .score-card.dominant .score-bar-fill { background: #02073E; }
+.diag-wrap .score-num { font-size: 22px; font-weight: 800; color: #ccc; margin: 0; }
+.diag-wrap .score-card.dominant .score-num { color: #02073E; }
+.diag-wrap .insight-box { border-left: 4px solid #d4b96a; background: #f5ecd4; padding: 18px 20px; margin-bottom: 28px; border-radius: 0 8px 8px 0; }
+.diag-wrap .insight-box strong { display: block; font-size: 14px; color: #02073E; margin: 0 0 8px; }
+.diag-wrap .insight-box p { font-size: 14px; color: #444; line-height: 1.75; margin: 0; }
+.diag-wrap .section-label { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #d4b96a; margin: 0 0 6px; display: block; }
+.diag-wrap .section-divider { height: 2px; background: #d4b96a; margin-bottom: 16px; }
+.diag-wrap .article-card { border: 1px solid #e0d8c8; border-radius: 10px; overflow: hidden; margin-bottom: 12px; background: #fff; }
+.diag-wrap .article-badge { background: #f5ecd4; padding: 6px 16px; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #02073E; display: block; }
+.diag-wrap .article-body { padding: 16px 16px 18px; }
+.diag-wrap .article-body h3 { font-size: 15px; font-weight: 700; color: #02073E; margin: 0 0 8px; line-height: 1.35; }
+.diag-wrap .article-body p { font-size: 13px; color: #666; line-height: 1.7; margin: 0 0 12px; }
+.diag-wrap .article-btn { display: inline-block; background: #02073E; color: #E7D49E; font-family: 'Exo 2', Arial, sans-serif; font-size: 13px; font-weight: 700; text-decoration: none; padding: 8px 16px; border-radius: 4px; letter-spacing: .03em; }
+.diag-wrap .article-btn:hover { background: #0d1a5c; color: #E7D49E; }
+.diag-wrap .rdv-box { background: #02073E; border-radius: 12px; padding: 32px 28px; text-align: center; margin-top: 28px; }
+.diag-wrap .rdv-box h3 { font-size: 18px; font-weight: 800; color: #E7D49E; margin: 0 0 10px; line-height: 1.35; }
+.diag-wrap .rdv-box p { font-size: 14px; color: #b0b8d4; line-height: 1.7; margin: 0 0 22px; }
+.diag-wrap .rdv-btn { display: inline-block; background: #E7D49E; color: #02073E; font-family: 'Exo 2', Arial, sans-serif; font-size: 14px; font-weight: 800; text-decoration: none; padding: 13px 26px; border-radius: 6px; letter-spacing: .03em; }
+.diag-wrap .rdv-btn:hover { background: #d4b96a; color: #02073E; }
+.diag-wrap .saving-msg { font-size: 12px; color: #999; text-align: center; margin-top: 12px; min-height: 18px; display: block; }
+@media (max-width: 480px) {
+  .diag-wrap .scores { grid-template-columns: 1fr; }
+  .diag-wrap .intro-card { padding: 28px 16px; }
+  .diag-wrap .q-title { font-size: 17px; }
+}
+</style>
+
+<div class="diag-wrap">
+
+  <!-- INTRO -->
+  <div class="step active" id="step-intro">
+    <div class="intro-card">
+      <h2>Identify your dominant distance</h2>
+      <p>Three distances hold back commercial performance in most B2B organizations. This diagnostic identifies which one is costing you the most.</p>
+      <div class="tags">
+        <span class="tag">Inner Distance</span>
+        <span class="tag">Relational Distance</span>
+        <span class="tag">Structural Distance</span>
+      </div>
+      <p style="font-size:13px;color:#999;margin-bottom:20px;">9 questions · 3 minutes · Instant result</p>
+      <button class="btn-start" onclick="diagStart()">Start the diagnostic &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="step" id="step-q1">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Inner Distance · 1/3</span><span>Question 1 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:11%"></div></div>
+    </div>
+    <span class="q-label">Inner Distance</span>
+    <h2 class="q-title">Before an important meeting, what is happening in your head?</h2>
+    <p class="q-sub">Be honest. No one is watching.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,1,1)"><div class="opt-title">I prepare and show up.</div><div class="opt-desc">No mental noise. I'm focused on the client.</div></div>
+      <div class="opt" onclick="diagSelect(this,1,2)"><div class="opt-title">I mentally rehearse possible objections.</div><div class="opt-desc">I prepare my answers. Sometimes too much.</div></div>
+      <div class="opt" onclick="diagSelect(this,1,3)"><div class="opt-title">I think about the quota, the pipeline, what this meeting means.</div><div class="opt-desc">The pressure is there before I even say hello.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn1" onclick="diagNext(2)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="step" id="step-q2">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Inner Distance · 2/3</span><span>Question 2 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+    </div>
+    <span class="q-label">Inner Distance</span>
+    <h2 class="q-title">When a client says "I need to think about it", what is your first reaction?</h2>
+    <p class="q-sub">That precise moment, in the seconds that follow.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,2,1)"><div class="opt-title">I accept it and clarify next steps.</div><div class="opt-desc">It's their process. I stay calm and useful.</div></div>
+      <div class="opt" onclick="diagSelect(this,2,2)"><div class="opt-title">I want to follow up immediately to keep control.</div><div class="opt-desc">Silence makes me uncomfortable. I look for ways to re-engage.</div></div>
+      <div class="opt" onclick="diagSelect(this,2,3)"><div class="opt-title">I wonder what I missed.</div><div class="opt-desc">I replay the meeting in my head looking for the mistake.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn2" onclick="diagNext(3)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="step" id="step-q3">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Inner Distance · 3/3</span><span>Question 3 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
+    </div>
+    <span class="q-label">Inner Distance</span>
+    <h2 class="q-title">During a meeting, your attention is mainly on...</h2>
+    <p class="q-sub">Not what you wish. What actually happens.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,3,1)"><div class="opt-title">What the client is saying and feeling.</div><div class="opt-desc">I am genuinely present, with them.</div></div>
+      <div class="opt" onclick="diagSelect(this,3,2)"><div class="opt-title">My next question or my next argument.</div><div class="opt-desc">I prepare while they are talking.</div></div>
+      <div class="opt" onclick="diagSelect(this,3,3)"><div class="opt-title">The time, the outcome, whether things are moving forward.</div><div class="opt-desc">I monitor external signals during the conversation.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn3" onclick="diagNext(4)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q4 -->
+  <div class="step" id="step-q4">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Relational Distance · 1/3</span><span>Question 4 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:44%"></div></div>
+    </div>
+    <span class="q-label">Relational Distance</span>
+    <h2 class="q-title">A client says they are "very interested" but does not call back. What do you think is happening?</h2>
+    <p class="q-sub">Your instinctive read of the situation.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,4,1)"><div class="opt-title">They have other priorities right now.</div><div class="opt-desc">It is not a rejection, it is timing. I will come back at the right moment.</div></div>
+      <div class="opt" onclick="diagSelect(this,4,2)"><div class="opt-title">They do not yet have the clarity to decide.</div><div class="opt-desc">Something is blocking internally. I need to help them see clearly.</div></div>
+      <div class="opt" onclick="diagSelect(this,4,3)"><div class="opt-title">They were waiting for me to follow up.</div><div class="opt-desc">The ball is in my court. I need to push.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn4" onclick="diagNext(5)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q5 -->
+  <div class="step" id="step-q5">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Relational Distance · 2/3</span><span>Question 5 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+    </div>
+    <span class="q-label">Relational Distance</span>
+    <h2 class="q-title">After sending a proposal, what do you do?</h2>
+    <p class="q-sub">Your actual reflex, not the theoretical ideal.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,5,1)"><div class="opt-title">I wait. The client knows I am available.</div><div class="opt-desc">I do not want to put pressure on them.</div></div>
+      <div class="opt" onclick="diagSelect(this,5,2)"><div class="opt-title">I reach out to check everything is clear.</div><div class="opt-desc">I want to understand where they are in their thinking.</div></div>
+      <div class="opt" onclick="diagSelect(this,5,3)"><div class="opt-title">I follow up with a deadline or an offer.</div><div class="opt-desc">I need to create some urgency to move things forward.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn5" onclick="diagNext(6)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q6 -->
+  <div class="step" id="step-q6">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Relational Distance · 3/3</span><span>Question 6 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+    </div>
+    <span class="q-label">Relational Distance</span>
+    <h2 class="q-title">Your client is hesitating between you and a competitor. What do you do?</h2>
+    <p class="q-sub">What you actually do, not what you should do.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,6,1)"><div class="opt-title">I dig into what really matters to them.</div><div class="opt-desc">I want to understand their real criteria before talking about myself.</div></div>
+      <div class="opt" onclick="diagSelect(this,6,2)"><div class="opt-title">I highlight what makes us different.</div><div class="opt-desc">I reinforce the value of our offer against the competition.</div></div>
+      <div class="opt" onclick="diagSelect(this,6,3)"><div class="opt-title">I try to find out what the competitor is offering.</div><div class="opt-desc">So I can adapt my pitch accordingly.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn6" onclick="diagNext(7)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q7 -->
+  <div class="step" id="step-q7">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Structural Distance · 1/3</span><span>Question 7 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:77%"></div></div>
+    </div>
+    <span class="q-label">Structural Distance</span>
+    <h2 class="q-title">Do your salespeople know exactly which type of client to prioritize this year?</h2>
+    <p class="q-sub">Not in broad strokes. Really precisely.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,7,1)"><div class="opt-title">Yes, it is clear and shared by everyone.</div><div class="opt-desc">We have a defined ideal client profile. Everyone knows it.</div></div>
+      <div class="opt" onclick="diagSelect(this,7,2)"><div class="opt-title">More or less. Everyone has their own interpretation.</div><div class="opt-desc">The broad lines are there, but it varies from one salesperson to another.</div></div>
+      <div class="opt" onclick="diagSelect(this,7,3)"><div class="opt-title">Not really. We take what comes.</div><div class="opt-desc">The priority is the number. The type of client, we will see.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn7" onclick="diagNext(8)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q8 -->
+  <div class="step" id="step-q8">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Structural Distance · 2/3</span><span>Question 8 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+    </div>
+    <span class="q-label">Structural Distance</span>
+    <h2 class="q-title">What does your weekly pipeline review actually look like?</h2>
+    <p class="q-sub">The real atmosphere, not the official version.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,8,1)"><div class="opt-title">We analyze blockers and decide on actions.</div><div class="opt-desc">It is a thinking session, not a reporting exercise.</div></div>
+      <div class="opt" onclick="diagSelect(this,8,2)"><div class="opt-title">We review numbers. Everyone explains where they are.</div><div class="opt-desc">It is useful but mostly stays at the tracking level.</div></div>
+      <div class="opt" onclick="diagSelect(this,8,3)"><div class="opt-title">It is mostly a pressure meeting about results.</div><div class="opt-desc">We look at the numbers. We ask why things are not done.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn8" onclick="diagNext(9)">Next question &rarr;</button>
+  </div>
+
+  <!-- Q9 -->
+  <div class="step" id="step-q9">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Structural Distance · 3/3</span><span>Question 9 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:99%"></div></div>
+    </div>
+    <span class="q-label">Structural Distance</span>
+    <h2 class="q-title">When a salesperson misses their targets, what does the first conversation focus on?</h2>
+    <p class="q-sub">What actually happens in your organization.</p>
+    <div class="options">
+      <div class="opt" onclick="diagSelect(this,9,1)"><div class="opt-title">We first understand what blocked them.</div><div class="opt-desc">We analyze the journey, not just the outcome.</div></div>
+      <div class="opt" onclick="diagSelect(this,9,2)"><div class="opt-title">We look at activities: calls, meetings, proposals.</div><div class="opt-desc">We look for the gap between effort and results.</div></div>
+      <div class="opt" onclick="diagSelect(this,9,3)"><div class="opt-title">We talk about the missing numbers and how to catch up.</div><div class="opt-desc">The urgency of results takes over the analysis.</div></div>
+    </div>
+    <button class="btn-primary" id="dbtn9" onclick="diagResult()">See my diagnostic &rarr;</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="step" id="step-result">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span>Diagnostic complete</span><span>9 of 9</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="result-header">
+      <span class="result-kicker">Your diagnostic · Selling@Zero Distance</span>
+      <h2 class="result-title" id="d-res-title"></h2>
+      <p class="result-sub" id="d-res-sub"></p>
+    </div>
+    <div class="scores" id="d-scores-grid"></div>
+    <div class="insight-box">
+      <strong id="d-insight-title"></strong>
+      <p id="d-insight-text"></p>
+    </div>
+    <span class="section-label">Recommended articles</span>
+    <div class="section-divider"></div>
+    <div id="d-articles"></div>
+    <div class="rdv-box">
+      <h3>Want to go further?</h3>
+      <p>A 30-minute call to precisely diagnose what is blocking your commercial organization. No commitment, no pitch.</p>
+      <a class="rdv-btn" href="https://meet.brevo.com/emre-vatansever/rdv-avec-emre-diagnostic-des-distances" target="_blank">Book a call with Emre &rarr;</a>
+    </div>
+    <span class="saving-msg" id="d-saving"></span>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var ans = {};
+
+  window.diagStart = function() { diagShow('step-q1'); };
+
+  window.diagSelect = function(el, q, val) {
+    el.parentNode.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('selected'); });
+    el.classList.add('selected');
+    ans[q] = val;
+    var btn = document.getElementById('dbtn'+q);
+    if(btn) btn.classList.add('ready');
+  };
+
+  window.diagNext = function(n) {
+    if(!ans[n-1]) return;
+    diagShow('step-q'+n);
+  };
+
+  function diagShow(id) {
+    document.querySelectorAll('.diag-wrap .step').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top: document.querySelector('.diag-wrap').offsetTop - 40, behavior: 'smooth'});
+  }
+
+  function calcScores() {
+    var w = {1:[0,1,2,3],2:[0,1,2,3],3:[0,1,2,3],4:[0,1,3,2],5:[0,2,1,2],6:[0,1,2,2],7:[0,1,2,3],8:[0,1,2,3],9:[0,1,2,3]};
+    return {
+      di: (w[1][ans[1]]||0)+(w[2][ans[2]]||0)+(w[3][ans[3]]||0),
+      dr: (w[4][ans[4]]||0)+(w[5][ans[5]]||0)+(w[6][ans[6]]||0),
+      ds: (w[7][ans[7]]||0)+(w[8][ans[8]]||0)+(w[9][ans[9]]||0)
+    };
+  }
+
+  function getDom(s) {
+    if(s.di>=s.dr && s.di>=s.ds) return 'di';
+    if(s.dr>=s.di && s.dr>=s.ds) return 'dr';
+    return 'ds';
+  }
+
+  var content = {
+    di:{
+      title:'Inner Distance',
+      sub:'Your own mindset is what is holding back your commercial performance.',
+      iTitle:'What this means concretely:',
+      iText:"Your potential is there. But part of your attention is captured by pressure, scenarios, and the judgments you make about yourself during the action. Timothy Gallwey called this interference. Performance = Potential minus Interference.",
+      badge:'Distance 01 · Inner Distance',
+      aTitle:'It is time to stop calling your sales team old school',
+      aDesc:"Malik knew his field better than anyone. His problem was the noise in his head during meetings. Here is what that changes, and how to address it.",
+      aUrl:'https://www.ezo.consulting/fr/il-est-temps-darreter-de-traiter-votre-equipe-commerciale-de-old-school/'
+    },
+    dr:{
+      title:'Relational Distance',
+      sub:'The space between you and your client is a source of invisible friction.',
+      iTitle:'What this means concretely:',
+      iText:"Your clients are not ghosting you. They are waiting for clarity to decide. Relational Distance is the gap between what you think you are communicating and what the client actually receives. Your role is not to convince. It is to create clarity.",
+      badge:'Distance 02 · Relational Distance',
+      aTitle:'Your client is not ghosting you. They are waiting for clarity.',
+      aDesc:"Sofia had made a perfect proposal. No response. What she had not seen: her client was not waiting for a solution. They were waiting for clarity to decide.",
+      aUrl:'https://www.ezo.consulting/fr/distance-relationnelle-ce-que-votre-client-ne-vous-dit-pas/'
+    },
+    ds:{
+      title:'Structural Distance',
+      sub:'What your organization decides does not translate to the field.',
+      iTitle:'What this means concretely:',
+      iText:"Leadership decided. The notes were sent. Three months later, nothing had changed on the ground. Structural Distance is the gap between what an organization wants and what its systems, rituals, and indicators actually reward.",
+      badge:'Distance 03 · Structural Distance',
+      aTitle:'When strategy stops at the client door',
+      aDesc:"Leadership had decided. The notes had been sent. Three months later, nothing had changed on the ground. Here is why, and how to fix it.",
+      aUrl:'https://www.ezo.consulting/fr/distance-structurelle-strategie-arrete-porte-client/'
+    }
+  };
+
+  window.diagResult = function() {
+    if(!ans[9]) return;
+    var s = calcScores();
+    var dom = getDom(s);
+    var c = content[dom];
+    var labels = {di:'Inner Distance',dr:'Relational Distance',ds:'Structural Distance'};
+
+    document.getElementById('d-res-title').textContent = c.title;
+    document.getElementById('d-res-sub').textContent = c.sub;
+    document.getElementById('d-insight-title').textContent = c.iTitle;
+    document.getElementById('d-insight-text').textContent = c.iText;
+
+    var grid = document.getElementById('d-scores-grid');
+    grid.innerHTML = '';
+    ['di','dr','ds'].forEach(function(k){
+      var pct = Math.round((s[k]/9)*100);
+      var card = document.createElement('div');
+      card.className = 'score-card'+(k===dom?' dominant':'');
+      card.innerHTML = '<span class="score-label">'+labels[k]+'</span>'
+        +'<div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-w="'+pct+'%"></div></div>'
+        +'<p class="score-num">'+pct+'%</p>';
+      grid.appendChild(card);
+    });
+    setTimeout(function(){
+      document.querySelectorAll('#d-scores-grid .score-bar-fill').forEach(function(b){
+        b.style.width = b.getAttribute('data-w');
+      });
+    }, 150);
+
+    document.getElementById('d-articles').innerHTML =
+      '<div class="article-card"><span class="article-badge">'+c.badge+'</span><div class="article-body"><h3>'+c.aTitle+'</h3><p>'+c.aDesc+'</p><a class="article-btn" href="'+c.aUrl+'" target="_blank">Read the article &rarr;</a></div></div>'
+      +'<div class="article-card" style="margin-top:12px"><span class="article-badge">Starting point · The full series</span><div class="article-body"><h3>The distances Thomas could not see</h3><p>The article that introduces the full framework of the three distances and how they interact.</p><a class="article-btn" href="https://www.ezo.consulting/fr/les-distances-que-thomas-ne-voyait-pas/" target="_blank">Read the article &rarr;</a></div></div>';
+
+    diagShow('step-result');
+    sendMake(s, dom, labels);
+  };
+
+  function sendMake(s, dom, labels) {
+    var params = new URLSearchParams(window.location.search);
+    var email = params.get('email') || '';
+    if(!email) return;
+    document.getElementById('d-saving').textContent = 'Saving your results...';
+    fetch('https://hook.eu1.make.com/xhqm8vaslb1tuq8t5l5dwesyhnlx3jmv', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email: email,
+        distance_dominante: labels[dom],
+        score_interieure: s.di,
+        score_relationnelle: s.dr,
+        score_structurelle: s.ds
+      })
+    }).then(function(r){
+      document.getElementById('d-saving').textContent = r.ok ? 'Results saved.' : '';
+    }).catch(function(){ document.getElementById('d-saving').textContent = ''; });
+  }
+})();
+</script>
