@@ -255,13 +255,21 @@
       <strong id="d-insight-title"></strong>
       <p id="d-insight-text"></p>
     </div>
-    <span class="section-label">Articles recommandés</span>
-    <div class="section-divider"></div>
-    <div id="d-articles"></div>
     <div class="rdv-box">
-      <h3>Vous voulez aller plus loin ?</h3>
-      <p>Un appel de 30 minutes pour diagnostiquer précisément ce qui bloque dans votre organisation commerciale. Sans engagement, sans pitch.</p>
-      <a class="rdv-btn" href="https://meet.brevo.com/emre-vatansever/rdv-avec-emre-diagnostic-des-distances" target="_blank">Réserver un appel avec Emre &rarr;</a>
+      <p id="d-debrief-pattern" style="font-size:15px;font-weight:700;color:#E7D49E;line-height:1.6;margin:0 0 12px;"></p>
+      <p id="d-debrief-reveal" style="font-size:14px;color:#b0b8d4;line-height:1.7;margin:0 0 20px;"></p>
+      <p style="font-size:14px;color:#b0b8d4;line-height:1.7;margin:0 0 20px;">Mais voilà ce qu'un score ne peut pas te dire : où se trouve le point de levier le plus puissant.</p>
+      <p style="font-size:16px;font-weight:800;color:#E7D49E;margin:0 0 16px;">Le Debrief Diagnostic de 20 minutes</p>
+      <p style="font-size:14px;color:#b0b8d4;line-height:1.7;margin:0 0 16px;">Je propose un appel court où on parcourt ensemble :</p>
+      <ul style="list-style:none;padding:0;margin:0 0 20px;text-align:left;">
+        <li style="font-size:14px;color:#b0b8d4;line-height:1.8;padding-left:16px;position:relative;">&#8594; Ce que ton pattern de distances révèle sur ton système commercial</li>
+        <li style="font-size:14px;color:#b0b8d4;line-height:1.8;padding-left:16px;position:relative;">&#8594; Ce que la plupart des organisations ratent quand elles voient des résultats comme les tiens</li>
+        <li style="font-size:14px;color:#b0b8d4;line-height:1.8;padding-left:16px;position:relative;">&#8594; Où se trouve ton point de levier le plus puissant, pas là où tu crois</li>
+      </ul>
+      <p style="font-size:14px;color:#b0b8d4;line-height:1.7;margin:0 0 8px;">Ce n'est pas un appel de vente. C'est la deuxième partie du diagnostic. Les chiffres te montrent où tu en es. La conversation te montre quoi faire.</p>
+      <p style="font-size:14px;color:#E7D49E;font-style:italic;line-height:1.7;margin:0 0 24px;">La plupart des gens repartent avec une insight qui change leur façon d'aborder toute leur stratégie commerciale.</p>
+      <a class="rdv-btn" href="https://meet.brevo.com/emre-vatansever/rdv-avec-emre-diagnostic-des-distances" target="_blank">Réserver mon debrief de 20 minutes &rarr;</a>
+      <p style="font-size:12px;color:#5a6080;margin:16px 0 0;font-style:italic;">Note : je ne fais ces debriefs que les mercredis et vendredis. Les créneaux partent dans les 48 heures suivant chaque lancement de diagnostic.</p>
     </div>
     <span class="saving-msg" id="d-saving"></span>
   </div>
@@ -314,6 +322,8 @@
       sub:"C'est votre propre mental qui freine votre performance commerciale.",
       iTitle:'Ce que ça veut dire concrètement :',
       iText:"Votre potentiel est là. Mais une partie de votre attention est captée par la pression, les scénarios, les jugements que vous portez sur vous-même pendant l'action. Timothy Gallwey appelait ça l'interférence. Performance = Potentiel moins Interférence.",
+      debriefPattern:"Tes résultats montrent que la principale source de friction est à l'intérieur du commercial lui-même.",
+      debriefReveal:"Cela révèle que ton système commercial perd de la performance non pas par manque de compétences, mais par interférence mentale pendant l'action.",
       badge:'Distance 01 · Distance Intérieure',
       aTitle:"Il est temps d'arrêter de traiter ton équipe de \"old school\"",
       aDesc:"Malik connaissait son domaine mieux que quiconque. Son problème, c'était le bruit dans sa tête pendant les rendez-vous. Voici ce que ça change.",
@@ -324,6 +334,8 @@
       sub:"L'espace entre vous et votre client est source de friction invisible.",
       iTitle:'Ce que ça veut dire concrètement :',
       iText:"Vos clients ne ghostent pas. Ils attendent de la clarté pour décider. La Distance Relationnelle, c'est l'écart entre ce que vous croyez communiquer et ce que le client reçoit réellement. Votre rôle n'est pas de convaincre. C'est de créer la clarté.",
+      debriefPattern:"Tes résultats montrent que la principale source de friction se situe dans l'espace entre ton équipe et ses clients.",
+      debriefReveal:"Cela révèle que ton système commercial génère des opportunités, mais perd de la valeur au moment précis où la décision du client se forme.",
       badge:'Distance 02 · Distance Relationnelle',
       aTitle:"Distance relationnelle : ce que ton client ne te dit pas",
       aDesc:"Sofia avait fait une proposition parfaite. Aucune réponse. Ce qu'elle n'avait pas vu : son client attendait de la clarté pour décider.",
@@ -334,6 +346,8 @@
       sub:"Ce que votre organisation décide ne se traduit pas sur le terrain.",
       iTitle:'Ce que ça veut dire concrètement :',
       iText:"La direction a décidé. Les notes ont été envoyées. Trois mois plus tard, rien n'a changé. La Distance Structurelle, c'est l'écart entre ce qu'une organisation veut et ce que ses systèmes récompensent réellement.",
+      debriefPattern:"Tes résultats montrent que la principale source de friction vient de l'organisation elle-même.",
+      debriefReveal:"Cela révèle que ce que tu décides en haut ne se traduit pas en comportements réels sur le terrain, et que ton système récompense probablement autre chose que ce que tu crois.",
       badge:'Distance 03 · Distance Structurelle',
       aTitle:"Distance structurelle : quand la stratégie s'arrête à la porte du client",
       aDesc:"La direction avait décidé. Trois mois plus tard, rien n'avait changé sur le terrain. Voici pourquoi, et comment y remédier.",
@@ -352,6 +366,8 @@
     document.getElementById('d-res-sub').textContent = c.sub;
     document.getElementById('d-insight-title').textContent = c.iTitle;
     document.getElementById('d-insight-text').textContent = c.iText;
+    document.getElementById('d-debrief-pattern').textContent = c.debriefPattern;
+    document.getElementById('d-debrief-reveal').textContent = c.debriefReveal;
 
     var grid = document.getElementById('d-scores-grid');
     grid.innerHTML = '';
