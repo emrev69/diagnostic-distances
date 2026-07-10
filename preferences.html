@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Mes préférences de suivi | Ezo Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #02073E;
+    --gold: #E7D49E;
+    --gold-border: #d4b96a;
+    --light: #f5ecd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Exo 2', Arial, sans-serif;
+    background: var(--light);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+  .hero {
+    background: var(--navy);
+    padding: 36px 24px 32px;
+    text-align: center;
+  }
+  .hero img { max-width: 180px; height: auto; }
+  .hero h1 {
+    color: var(--gold);
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 18px;
+    letter-spacing: 0.5px;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
+  }
+  .notice {
+    background: #ffffff;
+    border-left: 5px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 8px rgba(2, 7, 62, 0.06);
+  }
+  .notice strong { display: block; margin-bottom: 8px; font-size: 16px; }
+  .notice p { font-size: 14.5px; line-height: 1.6; }
+  .card {
+    background: #ffffff;
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    padding: 28px 26px;
+    box-shadow: 0 2px 12px rgba(2, 7, 62, 0.08);
+  }
+  .email-line {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+  .email-hint {
+    font-size: 13px;
+    color: #5a5f7a;
+    margin-bottom: 18px;
+  }
+  .card > p {
+    font-size: 15px;
+    line-height: 1.65;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e8e2d0;
+    margin-bottom: 22px;
+  }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e8e2d0;
+    margin-bottom: 24px;
+  }
+  .toggle-label { font-weight: 700; font-size: 16px; }
+  .switch-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+    color: #5a5f7a;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #b8b8c4;
+    border-radius: 28px;
+    transition: background 0.25s;
+  }
+  .slider::before {
+    content: "";
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.25s;
+  }
+  .switch input:checked + .slider { background: var(--navy); }
+  .switch input:checked + .slider::before { transform: translateX(24px); }
+  .switch input:focus-visible + .slider { outline: 3px solid var(--gold-border); outline-offset: 2px; }
+  .state-label.active { color: var(--navy); font-weight: 600; }
+  .actions { text-align: right; }
+  .btn-save {
+    font-family: 'Exo 2', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--gold);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 13px 26px;
+    cursor: pointer;
+    transition: filter 0.2s;
+  }
+  .btn-save:hover { filter: brightness(0.95); }
+  .btn-save:disabled { opacity: 0.6; cursor: default; }
+  .confirmation {
+    display: none;
+    margin-top: 20px;
+    background: var(--light);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .confirmation.visible { display: block; }
+  .footer {
+    text-align: center;
+    font-size: 12.5px;
+    color: #5a5f7a;
+    margin-top: 36px;
+    line-height: 1.7;
+  }
+  .footer a { color: var(--navy); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="https://img.mailinblue.com/9920749/images/content_library/original/698a078b724cb0509ee0c156.png" alt="Ezo Consulting">
+  <h1>Mes préférences de suivi</h1>
+</div>
+
+<div class="container">
+
+  <div class="notice">
+    <strong>Aidez-nous à mieux vous adresser nos messages.</strong>
+    <p>Suite à la recommandation de la CNIL du 12 mars 2026, nous vous invitons à exprimer votre choix concernant la mesure d'audience de nos emails.</p>
+  </div>
+
+  <div class="card">
+    <div id="emailKnown" style="display:none;">
+      <div class="email-line" id="emailDisplay"></div>
+      <div class="email-hint">Adresse associée à votre abonnement</div>
+    </div>
+    <div id="emailUnknown" style="display:none; background:#f5ecd4; border:1px solid #d4b96a; border-radius:6px; padding:14px 18px; margin-bottom:20px; font-size:14.5px; line-height:1.6;">
+      Pour que votre choix soit associ&eacute; &agrave; votre adresse, merci d'ouvrir cette page depuis le bouton <strong>G&eacute;rer mon consentement</strong> de l'email que vous avez re&ccedil;u.
+    </div>
+
+    <p>Pour adapter nos communications et savoir si nos messages vous sont utiles, nous mesurons l'ouverture des emails et les liens cliqués. Vous pouvez à tout moment accepter ou refuser cette mesure. Votre choix n'affecte pas votre abonnement : vous continuez à recevoir nos contenus dans tous les cas.</p>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Autoriser la mesure d'audience</span>
+      <div class="switch-group">
+        <span class="state-label" id="labelOff">Mesure désactivée</span>
+        <label class="switch">
+          <input type="checkbox" id="consentToggle" checked aria-label="Autoriser la mesure d'audience">
+          <span class="slider"></span>
+        </label>
+        <span class="state-label active" id="labelOn">Mesure activée</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-save" id="saveBtn">Enregistrer mes préférences</button>
+    </div>
+
+    <div class="confirmation" id="confirmation" role="status"></div>
+  </div>
+
+  <div class="footer">
+    Ezo Consulting, Lyon<br>
+    Vos données sont utilisées uniquement pour gérer vos préférences de communication.<br>
+    Recommandation CNIL n° 2026-042 du 12 mars 2026 relative aux pixels de suivi dans les courriers électroniques.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     CONFIGURATION
+     1. Dans Brevo : Contacts > Attributs > créer un attribut
+        booléen nommé MESURE_AUDIENCE.
+     2. Dans Brevo : créer un formulaire d'inscription contenant
+        les champs EMAIL et MESURE_AUDIENCE, activer l'option
+        "Mettre à jour les contacts existants", puis copier
+        l'URL d'action du formulaire (sibforms.com/serve/...)
+        ci-dessous.
+     Aucune clé API n'est utilisée : l'endpoint de formulaire
+     Brevo est public par conception.
+     ============================================================ */
+  var BREVO_FORM_ACTION = "REMPLACER_PAR_URL_FORMULAIRE_BREVO";
+
+  var params = new URLSearchParams(window.location.search);
+  var emailParam = (params.get("email") || "").trim();
+
+  var emailKnown = document.getElementById("emailKnown");
+  var emailUnknown = document.getElementById("emailUnknown");
+  var emailDisplay = document.getElementById("emailDisplay");
+  var toggle = document.getElementById("consentToggle");
+  var labelOn = document.getElementById("labelOn");
+  var labelOff = document.getElementById("labelOff");
+  var saveBtn = document.getElementById("saveBtn");
+  var confirmation = document.getElementById("confirmation");
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  /* Prefill via ?email= ; textContent uniquement, jamais innerHTML */
+  var emailValid = emailParam && isValidEmail(emailParam);
+  if (emailValid) {
+    emailDisplay.textContent = emailParam;
+    emailKnown.style.display = "block";
+  } else {
+    emailUnknown.style.display = "block";
+    saveBtn.disabled = true;
+  }
+
+  function refreshLabels() {
+    if (toggle.checked) {
+      labelOn.classList.add("active");
+      labelOff.classList.remove("active");
+    } else {
+      labelOff.classList.add("active");
+      labelOn.classList.remove("active");
+    }
+  }
+  toggle.addEventListener("change", refreshLabels);
+  refreshLabels();
+
+  function showMessage(text) {
+    confirmation.textContent = text;
+    confirmation.classList.add("visible");
+  }
+
+  saveBtn.addEventListener("click", function () {
+    if (!emailValid) {
+      showMessage("Votre adresse n'a pas pu être identifiée. Ouvrez cette page depuis le lien de l'email reçu.");
+      return;
+    }
+    var email = emailParam;
+    if (BREVO_FORM_ACTION.indexOf("http") !== 0) {
+      showMessage("Le formulaire n'est pas encore configuré. Vous pouvez exprimer votre choix en répondant directement à l'email reçu.");
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Enregistrement...";
+
+    var data = new FormData();
+    data.append("EMAIL", email);
+    data.append("MESURE_AUDIENCE", toggle.checked ? "true" : "false");
+    data.append("DATE_CHOIX", new Date().toISOString().slice(0, 10)); /* horodatage du choix, format YYYY-MM-DD */
+    data.append("email_address_check", ""); /* honeypot Brevo, laisser vide */
+    data.append("locale", "fr");
+
+    fetch(BREVO_FORM_ACTION, { method: "POST", body: data, mode: "no-cors" })
+      .then(function () {
+        showMessage(toggle.checked
+          ? "Vos préférences ont été enregistrées. La mesure d'audience reste activée pour votre adresse."
+          : "Vos préférences ont été enregistrées. La mesure d'audience est désactivée pour votre adresse.");
+      })
+      .catch(function () {
+        showMessage("Une erreur est survenue. Réessayez dans quelques instants ou répondez directement à l'email reçu.");
+      })
+      .finally(function () {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Enregistrer mes préférences";
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
