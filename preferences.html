@@ -228,7 +228,7 @@
      Aucune clé API n'est utilisée : l'endpoint de formulaire
      Brevo est public par conception.
      ============================================================ */
-  var BREVO_FORM_ACTION = "REMPLACER_PAR_URL_FORMULAIRE_BREVO";
+  var BREVO_FORM_ACTION = "https://16a041df.sibforms.com/serve/MUIFAPl-O_e78D0WLv3k3sQHlAUj1jJOXNmpYTmwk6HRuQJw3KsMUwdrLIVlgr1SDxIw7V3e_nWcFlo7UIsEaOBCoFkKVtgQepYYSgOfPRiyI20APkro6otRtdz5BgK74gn5OiWGGWwgw6Kt3B9cTp7JGmfTOkgMNvknLu9KVQyQH9P5wnuBVyG6xoQQklC-VSZqKSw2e37Hvte9";
 
   var params = new URLSearchParams(window.location.search);
   var emailParam = (params.get("email") || "").trim();
@@ -287,10 +287,16 @@
     saveBtn.disabled = true;
     saveBtn.textContent = "Enregistrement...";
 
+    /* Brevo attend le format dd-mm-yyyy pour DATE_CHOIX */
+    var d = new Date();
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var dateChoix = pad(d.getDate()) + "-" + pad(d.getMonth() + 1) + "-" + d.getFullYear();
+
     var data = new FormData();
     data.append("EMAIL", email);
-    data.append("MESURE_AUDIENCE", toggle.checked ? "true" : "false");
-    data.append("DATE_CHOIX", new Date().toISOString().slice(0, 10)); /* horodatage du choix, format YYYY-MM-DD */
+    /* La case à cocher Brevo envoie "1" ; on envoie "0" pour un refus explicite */
+    data.append("MESURE_AUDIENCE", toggle.checked ? "1" : "0");
+    data.append("DATE_CHOIX", dateChoix);
     data.append("email_address_check", ""); /* honeypot Brevo, laisser vide */
     data.append("locale", "fr");
 
